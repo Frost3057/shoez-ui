@@ -1,41 +1,104 @@
 package com.example.shoez.frontend.intropage
 
+import android.widget.Space
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.shoez.R
+import com.example.shoez.ui.theme.ShoezTheme
 
 @Composable
 fun intro(
 
 ){
     Column (
-        modifier= Modifier.fillMaxSize().background(color = Color(0xFFB71C1C)),
+        modifier= Modifier.fillMaxSize().background(color = MaterialTheme.colorScheme.onBackground),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ){
-        Text(
-            "PAMPER YOUR FEET",
-        )
-        Text(
-            "WITH OUR SHOES"
-        )
-        Text(
-            "Smart,gorgeous & fashionable"
-        )
-        Text(
-            "collection make you cool"
-        )
+        Box(
+            modifier = Modifier.fillMaxWidth().requiredHeight(400.dp),
+            contentAlignment = Alignment.CenterEnd,
+        ){
+            Image(
+                painter = painterResource(R.drawable.shoe2),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize()
+
+            )
+        }
+        Spacer(Modifier.padding(top = 75.dp))
+        Box{
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Text(
+                    "PAMPER  YOUR  FEET",
+                    style = MaterialTheme.typography.headlineLarge,
+                    fontSize = 27.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+                Spacer(Modifier.padding(top = 12.dp))
+                Text(
+                    "WITH  OUR  SHOES",
+                    style = MaterialTheme.typography.headlineLarge,
+                    fontSize = 25.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+                Spacer(Modifier.padding(top = 12.dp))
+                Text(
+                    "Smart, gorgeous & fashionable",
+                    style = MaterialTheme.typography.labelSmall,
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Light,
+                    color = Color(0xFFE6E0E0)
+                )
+                Spacer(Modifier.padding(top = 8.dp))
+                Text(
+                    "collection make you cool",
+                    style = MaterialTheme.typography.labelSmall,
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Light,
+                    color = Color(0xFFE6E0E0)
+                )
+            }
+        }
+        Spacer(Modifier.padding(top = 150.dp))
     }
 }
 
 @Composable
-@Preview()
+@Preview
 fun introPreview(){
-    intro()
+    ShoezTheme(
+        darkTheme = false,
+        dynamicColor = false
+    ) {
+
+        intro()
+    }
 }
