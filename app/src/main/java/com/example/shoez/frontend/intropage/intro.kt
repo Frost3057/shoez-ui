@@ -1,6 +1,6 @@
 package com.example.shoez.frontend.intropage
 
-import android.widget.Space
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,34 +11,65 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.pager.VerticalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.shoez.R
+import com.example.shoez.frontend.ihomepage.homePage
+import com.example.shoez.homepage
 import com.example.shoez.ui.theme.ShoezTheme
 
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun introPage(navController: NavController){
+    val pagerState = rememberPagerState(
+        initialPage = 0,
+        pageCount ={2}
+    )
+    Box{
+        VerticalPager(
+            state = pagerState,
+            pageSpacing = 400.dp
+        ) {
+            index ->
+            when(index){
+                0-> {
+                    intro()
+                }
+                1->{
+                    homePage()
+                }
+            }
+        }
+    }
+}
 @Composable
 fun intro(
 
 ){
     Column (
-        modifier= Modifier.fillMaxSize().background(color = MaterialTheme.colorScheme.onBackground),
+        modifier= Modifier
+            .fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.onBackground),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ){
         Box(
-            modifier = Modifier.fillMaxWidth().requiredHeight(400.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .requiredHeight(400.dp),
             contentAlignment = Alignment.CenterEnd,
         ){
             Image(
@@ -61,7 +92,8 @@ fun intro(
                     fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
-                Spacer(Modifier.padding(top = 12.dp))
+
+                    Spacer(Modifier.padding(top = 12.dp))
                 Text(
                     "WITH  OUR  SHOES",
                     style = MaterialTheme.typography.headlineLarge,
