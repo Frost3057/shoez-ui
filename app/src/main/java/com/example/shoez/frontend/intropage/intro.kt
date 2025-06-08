@@ -1,5 +1,6 @@
 package com.example.shoez.frontend.intropage
 
+
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -17,9 +18,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,6 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
@@ -36,10 +41,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.dotlottie.dlplayer.Mode
 import com.example.shoez.R
 import com.example.shoez.frontend.ihomepage.homePage
 import com.example.shoez.homepage
 import com.example.shoez.ui.theme.ShoezTheme
+import com.lottiefiles.dotlottie.core.compose.ui.DotLottieAnimation
+import com.lottiefiles.dotlottie.core.util.DotLottieSource
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -147,11 +155,24 @@ fun intro(
                     fontWeight = FontWeight.Light,
                     color = Color(0xFFE6E0E0)
                 )
+                Spacer(Modifier.padding(top = 120.dp))
+                Box(modifier= Modifier.size(100.dp)){
+                    DotLottieAnimation(
+                        source = DotLottieSource.Url("https://lottie.host/cfa7ffcf-2c38-4829-9b72-64054bf1db29/MVPb2GUaxC.lottie"),
+                        autoplay = true,
+                        loop = true,
+                        speed = 1f,
+                        useFrameInterpolation = false,
+                        playMode = Mode.FORWARD,
+                        modifier = Modifier.background(MaterialTheme.colorScheme.onBackground)
+                    )
+                }
             }
         }
-        Spacer(Modifier.padding(top = 150.dp))
+        Spacer(Modifier.padding(top = 25.dp))
     }
 }
+
 
 @Composable
 @Preview
