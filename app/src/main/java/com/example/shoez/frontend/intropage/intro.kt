@@ -1,14 +1,20 @@
 package com.example.shoez.frontend.intropage
 
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.pager.VerticalPager
@@ -16,9 +22,14 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,33 +45,53 @@ import com.example.shoez.ui.theme.ShoezTheme
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun introPage(navController: NavController){
-    val pagerState = rememberPagerState(
-        initialPage = 0,
-        pageCount ={2}
+    var isSwipedUp by remember {
+        mutableStateOf(false)
+    }
+    var currentOffset by remember{
+        mutableStateOf(0f)
+    }
+
+    val animatedb by animateDpAsState(
+        targetValue = if (isSwipedUp) (-1000).dp else currentOffset.dp,
+        animationSpec = tween(
+            durationMillis = 500,
+            easing = FastOutSlowInEasing
+        )
     )
-    Box{
-        VerticalPager(
-            state = pagerState,
-            pageSpacing = 400.dp
-        ) {
-            index ->
-            when(index){
-                0-> {
-                    intro()
+    val finalOffset = if(isSwipedUp) animatedb.value else currentOffset
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ){
+        homePage()
+        intro(modifier = Modifier.offset(y=finalOffset.dp).pointerInput(Unit){
+            detectDragGestures(onDragStart = {
+                isSwipedUp = false
+                currentOffset = 0f
+            },onDragEnd = {
+                if(currentOffset<-200){
+                    isSwipedUp = true
                 }
-                1->{
-                    homePage()
+                currentOffset = 0f
+            },){
+                _,dragAmount->
+                val drag = dragAmount.y + currentOffset
+                if(drag<=0){
+                    currentOffset = drag
+                }
+                if(currentOffset<-300){
+                    isSwipedUp = true
                 }
             }
-        }
+        })
     }
 }
 @Composable
 fun intro(
-
+    modifier: Modifier
 ){
     Column (
-        modifier= Modifier
+        modifier= modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.onBackground),
         verticalArrangement = Arrangement.Center,
@@ -92,7 +123,6 @@ fun intro(
                     fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
-
                     Spacer(Modifier.padding(top = 12.dp))
                 Text(
                     "WITH  OUR  SHOES",
@@ -131,6 +161,6 @@ fun introPreview(){
         dynamicColor = false
     ) {
 
-        intro()
+
     }
 }
