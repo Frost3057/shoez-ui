@@ -21,7 +21,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-
             ShoezTheme (
                 darkTheme = false,
                 dynamicColor = false
