@@ -1,4 +1,4 @@
-package com.example.shoez.frontend.homepage.Components
+ package com.example.shoez.frontend.homepage.Components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.content.MediaType.Companion.Text
